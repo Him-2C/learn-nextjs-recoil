@@ -6,7 +6,9 @@ const TodoItemCreator = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [todoList, setTodoList] = useRecoilState(todoListState);
 
-  const addItem = () => {
+  const addItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
     setTodoList((oldTodoList) => [
       ...oldTodoList,
       {
@@ -19,14 +21,14 @@ const TodoItemCreator = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={(e) => addItem(e)}>
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <button onClick={() => addItem()}>Add</button>
-    </div>
+      <button type="submit" onClick={(e) => addItem(e)}>Add</button>
+    </form>
   );
 };
 
